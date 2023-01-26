@@ -1,0 +1,39 @@
+{
+    "products": {
+        "1": [
+            {
+                "productID": 1,
+                "name": "T-Shirt Homme",
+                "price": 12,
+                "description": "T-Shirt pour homme 100% coton égyption",
+                "weight": 150,
+                "height": 60,
+                "photo": "1",
+                "averageDeliveryDate": "",
+                "createdAt": "2023-01-26",
+                "updatedAt": "2023-01-26",
+                "deletedAt": "2023-01-26",
+                "storeID": 1,
+                "categorieID": 1
+            },
+            {
+                "productID": 2,
+                "name": "T-Shirt Femme",
+                "price": 12,
+                "description": "T-Shirt pour femme 100% coton égyption",
+                "weight": 150,
+                "height": 60,
+                "photo": "2",
+                "averageDeliveryDate": "",
+                "createdAt": "2023-01-26",
+                "updatedAt": "2023-01-26",
+                "deletedAt": "2023-01-26",
+                "storeID": 1,
+                "categorieID": 1
+            }
+        ],
+        "2": [
+
+        ]
+    }
+}
