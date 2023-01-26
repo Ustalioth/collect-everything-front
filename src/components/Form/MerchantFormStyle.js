@@ -6,9 +6,5 @@ export const MerchantFormStyle = styled.nav`
     flex-direction: column;
     text-align: center;
   }
-
-  div{
-    text-align: center;
-  }
   
 `;

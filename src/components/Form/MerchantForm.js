@@ -2,17 +2,8 @@ import React from "react";
 import {MerchantFormStyle} from "./MerchantFormStyle";
 import {Link} from "react-router-dom";
 
-export const MerchantForm = ({type, price}) => (
+export const MerchantForm = (props) => (
     <MerchantFormStyle>
-        <div>
-            <h1>
-                Votre offre :
-            </h1>
-            <p>
-                Abonnement : {type} <br/>
-                Tarif : {price}€
-            </p>
-        </div>
         <form>
             <h1>Vous</h1>
             <label htmlFor="firstname">
