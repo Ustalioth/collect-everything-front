@@ -7,4 +7,8 @@ export const PaymentFormStyles = styled.nav`
     text-align: center;
   }
   
+  div > span{
+    display: flex;
+  }
+  
 `;

@@ -25,10 +25,11 @@ export const PaymentForm = (props) => {
 
             { (type === "check" &&
                 <div>
-                Je m'engage à faire parvenir mon paiement par chèque à l'adresse suivante :
-                13 rue des guignols
-                57000 Metz
-                France
+                    <span>Je m'engage à faire parvenir mon paiement par chèque à l'adresse suivante :</span>
+                    <span>Collect&verything</span>
+                    <span>12 rue Haute Seille</span>
+                    <span>57000 Metz</span>
+                    <span>France</span>
                 </div>)
             ||
                 (<div>

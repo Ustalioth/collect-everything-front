@@ -2,8 +2,17 @@ import React from "react";
 import {MerchantFormStyle} from "./MerchantFormStyle";
 import {Link} from "react-router-dom";
 
-export const MerchantForm = (props) => (
+export const MerchantForm = ({type, price}) => (
     <MerchantFormStyle>
+        <div>
+            <h1>
+                Votre offre :
+            </h1>
+            <p>
+                Abonnement : {type} <br/>
+                Tarif : {price}€
+            </p>
+        </div>
         <form>
             <h1>Vous</h1>
             <label htmlFor="firstname">
@@ -32,13 +41,45 @@ export const MerchantForm = (props) => (
                 <input type="file" name="shop_logo"/>
             </label>
             <label htmlFor="shop_category">
-                Catégorie des produits de la boutique
+                Secteur d'activité :
                 <select>
                     <option>Vêtements</option>
                     <option>Electronique</option>
                     <option>Ammeublement</option>
                     <option>Automobile</option>
                 </select>
+            </label>
+
+            <label htmlFor="streetNumber">
+                Numéro
+                <input type="text" name="streetNumber"/>
+            </label>
+
+
+            <label htmlFor="streetName">
+                Rue
+                <input type="text" name="streetName"/>
+            </label>
+
+            <label htmlFor="complement">
+                Complément d'adresse
+                <input type="text" name="complement"/>
+            </label>
+
+
+            <label htmlFor="postalCode">
+                Code postal
+                <input type="text" name="postalCode"/>
+            </label>
+
+            <label htmlFor="city">
+                Ville
+                <input type="text" name="city"/>
+            </label>
+
+            <label htmlFor="siret">
+                SIRET
+                <input type="text" name="siret"/>
             </label>
             <Link to="/checkout">
                 <button>Envoyer</button>

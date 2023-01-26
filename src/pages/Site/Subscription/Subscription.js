@@ -2,16 +2,16 @@ import React from "react";
 import { Navbar } from "components/Navbar/Navbar";
 import { Logo } from "components/Logo/Logo";
 import {MerchantForm} from "../../../components/Form/MerchantForm";
+import {useLocation} from "react-router-dom";
 export const Subscription = (props) => {
-    const {type, price} = props;
+    const location = useLocation();
 
-    console.log(props);
+    const {state} = location;
 
     return (<>
         <Logo/>
         <Navbar/>
-        <MerchantForm/>
-        <h1>{type}</h1>
+        <MerchantForm type={state.type} price={state.price}/>
     </>)
     ;
 }
