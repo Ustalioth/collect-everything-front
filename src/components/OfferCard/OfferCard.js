@@ -6,7 +6,7 @@ export const OfferCard = (props) => (
   <OfferCardStyle>
     <div className="mainOfferDiv" style={{ backgroundColor: props.color }}>
       <div className="firstOfferDiv">
-        <span>{props.type} Membership</span>
+        <span>Abonnement {props.type}</span>
         <span>{props.price}€</span>
         <span>{props.description}</span>
         <Link to="/subscription" state={{type: props.type, price: props.price}}>

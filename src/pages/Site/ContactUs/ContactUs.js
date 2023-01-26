@@ -8,9 +8,9 @@ export const ContactUs = (props) => (
     <Logo />
     <Navbar />
     <form>
-      <label for="message">Your message :</label>
+      <label for="message">Votre message :</label>
       <textarea type="text" name="message" />
-      <label for="email">Your email adress :</label>
+      <label for="email">Votre addresse email :</label>
       <input type="text" name="email" />
       <input type="submit" value="Send" />
     </form>

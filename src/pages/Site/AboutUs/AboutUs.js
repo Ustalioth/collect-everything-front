@@ -5,21 +5,12 @@ export const AboutUs = (props) => (
   <>
     <Logo />
     <Navbar />
+      <h1>Ce que nous proposons</h1><br/>
     <p>
-      Lorem ipsum dolor sit amet. Et fuga enim non obcaecati sunt ut quis
-      voluptatem cum suscipit beatae quo accusamus sequi. Quo adipisci officia
-      cum beatae praesentium ex sunt voluptas. Vel corporis repellat aut nihil
-      quam est dolorum nobis qui modi iste. Vel quae consequuntur sed commodi
-      porro ea porro enim id porro consequatur qui reprehenderit porro qui
-      voluptatum voluptatibus. At aperiam dignissimos id nesciunt rerum eum quam
-      repudiandae aut dolorem ipsam qui eius nihil qui dolorum consequatur. Qui
-      repellendus necessitatibus eos dolorum facere ad quia perferendis. Et
-      eveniet architecto eos amet excepturi et totam assumenda et exercitationem
-      incidunt! Non distinctio rerum ut veritatis illo rem quia accusantium qui
-      rerum inventore. Qui illum inventore qui voluptatum molestias sit cumque
-      voluptates et repellat eius ea aliquid deleniti sed nihil dolore. Qui
-      dolor itaque et eius dolorem ea rerum iste sit blanditiis debitis rem
-      voluptatem aliquam sit animi omnis et voluptatem cupiditate.
+      Nous proposons aux marchands qui le souhaitent une offre clé en main permettant de générer et gérer facilement son site marchand
+        en échange d'un paiement mensualisé.<br /><br />
+
+        Plusieurs offres sont disponibles selon vos besoins en terme de nombre de clients, de nombre d'articles et de performances serveur.
     </p>
   </>
 );
