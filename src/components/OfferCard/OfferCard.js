@@ -9,16 +9,16 @@ export const OfferCard = (props) => (
         <span>{props.type} Membership</span>
         <span>{props.price}€</span>
         <span>{props.description}</span>
-        <Link to="/form">
+        <Link to="/subscription" state={{type: props.type, price: props.price}}>
           <button>Select</button>
         </Link>
       </div>
       <div className="secondOfferDiv">
-        <li>
-          {props.benefits.map((benefit) => (
-            <ul>{benefit}</ul>
+        <ul>
+          {props.benefits.map((benefit, index) => (
+            <li key={index}>{benefit}</li>
           ))}
-        </li>
+        </ul>
       </div>
     </div>
   </OfferCardStyle>

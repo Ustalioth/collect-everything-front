@@ -41,7 +41,7 @@ export const MerchantForm = (props) => (
                 </select>
             </label>
             <Link to="/checkout">
-                <button>Submit</button>
+                <button>Envoyer</button>
             </Link>
         </form>
     </MerchantFormStyle>

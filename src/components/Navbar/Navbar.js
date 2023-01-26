@@ -6,13 +6,13 @@ export const Navbar = (props) => (
   <NavBar>
     <ul>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/">Accueil</Link>
       </li>
       <li>
-        <Link to="/about-us">About us</Link>
+        <Link to="/about-us">A propos</Link>
       </li>
       <li style={{ float: "right" }}>
-        <Link to="/contact-us">Contact us</Link>
+        <Link to="/contact-us">Contactez nous</Link>
       </li>
     </ul>
   </NavBar>
