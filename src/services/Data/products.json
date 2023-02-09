@@ -2,34 +2,37 @@
     "products": {
         "1": [
             {
-                "productID": 1,
+                "productId": 1,
                 "name": "T-Shirt Homme",
                 "price": 12,
-                "description": "T-Shirt pour homme 100% coton égyption",
+                "description": "T-Shirt pour homme 100% coton égyptien",
                 "weight": 150,
                 "height": 60,
+                "availableInStore": true,
                 "photo": "1",
-                "averageDeliveryDate": "",
-                "createdAt": "2023-01-26",
-                "updatedAt": "2023-01-26",
-                "deletedAt": "2023-01-26",
-                "storeID": 1,
-                "categorieID": 1
+                "storeId": 1
             },
             {
-                "productID": 2,
+                "productId": 2,
                 "name": "T-Shirt Femme",
                 "price": 12,
-                "description": "T-Shirt pour femme 100% coton égyption",
+                "description": "T-Shirt pour femme 100% coton égyptien",
                 "weight": 150,
                 "height": 60,
+                "availableInStore": true,
                 "photo": "2",
-                "averageDeliveryDate": "",
-                "createdAt": "2023-01-26",
-                "updatedAt": "2023-01-26",
-                "deletedAt": "2023-01-26",
-                "storeID": 1,
-                "categorieID": 1
+                "storeID": 1
+            },
+            {
+                "productId": 3,
+                "name": "Pantalon Homme",
+                "price": 12,
+                "description": "Pantalon Homme en coton",
+                "weight": 250,
+                "height": 100,
+                "availableInStore": true,
+                "photo": "3",
+                "storeID": 1
             }
         ],
         "2": [

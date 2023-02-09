@@ -11,17 +11,14 @@ export const ProductCard = (props) => {
     return (
         <>
             <Link state={{product: product, shopName: shopName}} to={"/shop/"+shopName+"/product/"+product.productId}>
-                <div className="row">
-                    <div className="col-12">
-                        IMAGE ICI
+                <div className="card">
+                    <img src={product.photo} className="card-img-top" alt={product.name} />
+                    <div className="card-body">
+                        <h5 className="card-title">{product?.name}</h5>
+                        <p className="card-text">{product?.description}</p>
                     </div>
-                    <div className="col-12">
-                        <p className="mb-0">
-                            {product?.name}
-                        </p>
-                        <p>
-                            {product?.price}€
-                        </p>
+                    <div className="card-body">
+                        {product?.price} €
                     </div>
                 </div>
             </Link>

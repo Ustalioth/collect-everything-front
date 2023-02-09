@@ -6,8 +6,8 @@ import { OfferCardStyle } from "./OfferCard.styles";
 
 export const OfferCard = (props) => (
   <OfferCardStyle>
-    <div class="mainOfferDiv" style={{ backgroundColor: props.color }}>
-      <div class="firstOfferDiv">
+    <div className="mainOfferDiv" style={{ backgroundColor: props.color }}>
+      <div className="firstOfferDiv">
         <span>{props.type} Membership</span>
         <span>{props.price}€</span>
         <span>{props.description}</span>
@@ -15,7 +15,7 @@ export const OfferCard = (props) => (
           <button>Select</button>
         </Link>
       </div>
-      <div class="secondOfferDiv">
+      <div className="secondOfferDiv">
         <li>
           {props.benefits.map((benefit) => (
             <ul>{benefit}</ul>

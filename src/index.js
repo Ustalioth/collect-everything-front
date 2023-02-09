@@ -11,8 +11,9 @@ import { AboutUs } from "pages/Site/AboutUs/AboutUs";
 import { Checkout } from "pages/Site/Checkout/Checkout";
 import {ShopCategories} from "./pages/Shop/Catalog/Categories/ShopCategories";
 import {ProductDetails} from "./pages/Shop/Catalog/Product/ProductDetails";
-import {ShopCategory} from "./pages/Shop/Catalog/Categories/ShopCategory";
+import {ShopCategory} from "./pages/Shop/Catalog/Categories/ShopCategorySelect";
 import {ShopLogin} from "./pages/Shop/Account/ShopLogin";
+import { Catalog } from "pages/Shop/Catalog/Catalog";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -25,9 +26,10 @@ root.render(
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/shop/:shopName" element={<ShopHomePage />} />
       <Route path="/shop/:shopName/categories" element={<ShopCategories />} />
-      <Route path="/shop/:shopName/category/:categoryId" element={<ShopCategory />} />
+      <Route path="/shop/:shopName/category/:categoryId" element={<Catalog />} />
       <Route path="/shop/:shopName/product/:idProduct" element={<ProductDetails />} />
       <Route path="/shop/:shopName/login" element={<ShopLogin />} />
+      <Route path="/shop/:shopName/catalog" element={<Catalog />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   </BrowserRouter>

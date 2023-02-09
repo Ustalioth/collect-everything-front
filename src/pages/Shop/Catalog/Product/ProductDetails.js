@@ -12,7 +12,7 @@ export const ProductDetails = (props) => {
     return (
         <>
             <Navbar/>
-            <Link className={"btn btn-danger"} to={"/shop/"+shopName}>
+            <Link className={"btn btn-danger"} to={"/shop/" + shopName + "/catalog"}>
                 Back to product list
             </Link>
             <div>
