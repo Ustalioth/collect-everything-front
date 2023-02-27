@@ -22,13 +22,12 @@ export const HomePage = () => {
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <h1>Bienvenue sur la boutique {shopName}</h1>
             <div className="d-flex">
                 {products && products?.map(product =>
                     <ProductCard product={product}/>
-                )
-                }
+                )}
             </div>
             
         </>
