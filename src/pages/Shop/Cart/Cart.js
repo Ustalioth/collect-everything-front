@@ -34,6 +34,20 @@ export const Cart = (props) => {
             .catch(err => setWalletCurrentAccount(null));
     }
 
+    const handleCreateOrder = () => {
+        // call create order
+        // ...
+
+        // call update newly created order with purchase list
+        // ...
+
+        // call payment
+        // ...
+
+        // call update OrderStatus (order paid or not paid)
+        // ...
+    }
+
     return (
         <>
             <Navbar />
@@ -135,6 +149,7 @@ export const Cart = (props) => {
                             <button 
                                 className="btn btn-primary" 
                                 disabled={(walletCurrentAccount === null)}
+                                onClick={handleCreateOrder}
                             >
                                 Commander
                             </button>
