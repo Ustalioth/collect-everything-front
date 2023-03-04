@@ -8,22 +8,23 @@ import { PersonCircle, Cart3 } from "react-bootstrap-icons";
 export const Navbar = (props) => {
   let {shopName} = useParams();
 
-  const cart = useSelector((state) => state.shop.cart)
+  const cart = useSelector((state) => state.shop.cart);
 
   const getTotalQuantity = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
+    return cart?.length;
+    //return cart.reduce((total, item) => total + item.quantity, 0);
   }
 
 
   return (
     <ShopNavbar>
       <SearchBar />
-      <Link to={"/shop/"+shopName}>homepage</Link>
-      <Link state={{shopName: shopName}} to={"/shop/"+shopName+"/categories"}>categories</Link>
-      <Link to={"/shop/"+shopName+"/login"}>
+      <Link to={`/shop/${shopName}`}>homepage</Link>
+      <Link state={{shopName: shopName}} to={`/shop/${shopName}/categories`}>categories</Link>
+      <Link to={`/shop/${shopName}/login`}>
         <PersonCircle />
       </Link>
-      <Link to={"/shop/"+shopName+"/cart"}>
+      <Link to={`/shop/${shopName}/cart`}>
         <Cart3 />
         <p>{getTotalQuantity() || 0}</p>
       </Link>

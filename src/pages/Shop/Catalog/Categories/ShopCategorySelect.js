@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import testData from "../../../../services/Data/categories.json";
+import testData from "services/Data/categories.json";
 
 
 export const ShopCategorySelect = (props) => {

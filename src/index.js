@@ -12,11 +12,11 @@ import reportWebVitals from "./reportWebVitals";
 import { ContactUs } from "pages/Site/ContactUs/ContactUs";
 import { AboutUs } from "pages/Site/AboutUs/AboutUs";
 import { Checkout } from "pages/Site/Checkout/Checkout";
-import {ShopCategories} from "./pages/Shop/Catalog/Categories/ShopCategories";
-import {ProductDetails} from "./pages/Shop/Catalog/Product/ProductDetails";
-import {ShopCategory} from "./pages/Shop/Catalog/Categories/ShopCategorySelect";
-import {ShopLogin} from "./pages/Shop/Account/ShopLogin";
+import {ShopCategories} from "pages/Shop/Category/ShopCategories";
+import {ProductDetails} from "pages/Shop/Catalog/Product/ProductDetails";
+import {ShopLogin} from "pages/Shop/Account/ShopLogin";
 import { Catalog } from "pages/Shop/Catalog/Catalog";
+import { Cart } from "pages/Shop/Cart/Cart";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -37,6 +37,7 @@ root.render(
           <Route path="/shop/:shopName/product/:idProduct" element={<ProductDetails />} />
           <Route path="/shop/:shopName/login" element={<ShopLogin />} />
           <Route path="/shop/:shopName/catalog" element={<Catalog />} />
+          <Route path="/shop/:shopName/cart" element={<Cart />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       {/*</PersistGate>*/}
