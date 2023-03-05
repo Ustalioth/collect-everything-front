@@ -27,7 +27,9 @@ export const Cart = (props) => {
                 } else  {
                     window?.ethereum
                         .request({ method: 'eth_requestAccounts' })
-                        .then(availableAccounts => setWalletCurrentAccount(availableAccounts[0]))
+                        .then(availableAccounts => {
+                            setWalletCurrentAccount(availableAccounts[0]);
+                        })
                         .catch(err => setWalletCurrentAccount(null));
                 }
             })
@@ -35,17 +37,7 @@ export const Cart = (props) => {
     }
 
     const handleCreateOrder = () => {
-        // call create order
-        // ...
-
-        // call update newly created order with purchase list
-        // ...
-
-        // call payment
-        // ...
-
-        // call update OrderStatus (order paid or not paid)
-        // ...
+        // si transaction de paiement réussit, on crée la commande en back
     }
 
     return (
