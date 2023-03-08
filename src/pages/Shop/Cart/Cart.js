@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {Navbar} from "pages/Shop/Navbar/Navbar";
 import Web3 from "web3";
 import axios from "axios";
+import tokenAbi from 'ressources/CollectEverythingABI.json';
 
 export const Cart = (props) => {
     const cart = useSelector((state) => state.shop.cart);
@@ -38,7 +39,7 @@ export const Cart = (props) => {
 
     const handleCreateOrder = () => {
 
-        let web3 = new Web3();
+        const web3 = new Web3(Web3.givenProvider);
 
         const ETHEREUM_SYMBOL = 'ETH';
         const CURRENCY = 'EUR';
@@ -67,25 +68,26 @@ export const Cart = (props) => {
                 // ...
 
                 // call payment
-                let priceInEur = 100; // @TODO Valeur FICTIVE à remplacer par la valeur réelle du panier
+                let priceInEur = 100; // @TODO Valeur FICTIVE à remplacer par la valeur réelle du panier en euros
                 let priceToPayInEth = String(priceInEur / ethPrice);
-                console.log(priceToPayInEth);
-                try {
-                    const transactionHash = window?.ethereum.request({
-                        method: 'eth_sendTransaction',
-                        params: [
-                            {
-                                to: '0x41795E219A93d688bFd19d83403eAa852E291d73',
-                                from: walletCurrentAccount,
-                                value: web3.utils.toHex(web3.utils.toWei(priceToPayInEth, "ether")),
-                            },
-                        ],
-                    });
-                    // Handle the result
-                    console.log(transactionHash);
-                } catch (error) {
-                    console.error(error);
-                }
+
+                console.log('web3 : ' + web3);
+                // create an instance of the ERC20 token contract
+                const tokenContract = new web3.eth.Contract(tokenAbi, '0xf07b18b9dc2e99ee711c12694b4264ff0f3a045a');
+                console.log('tokenContract : ' + tokenContract);
+
+                let merchantAddress = '0x9343e240EED5Bc29b93d682d2003a3527F8B28fA';
+
+
+                // call the myMethod function on the smart contract and send the tokens
+                //@TODO remplacer l'adresse par celle du marchant
+                tokenContract.methods.pay(merchantAddress).send({
+                    from: walletCurrentAccount,
+                    value: web3.utils.toHex(web3.utils.toWei(priceToPayInEth, "ether"))
+                }).on('receipt', (receipt) => {
+                    console.log('Transaction receipt:', receipt);
+                });
+
         }
 
             // call update OrderStatus (order paid or not paid)
