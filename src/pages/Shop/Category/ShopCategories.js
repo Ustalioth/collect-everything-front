@@ -7,18 +7,18 @@ import {Navbar} from "pages/Shop/Navbar/Navbar";
 import testData from "services/Data/categories.json";
 
 export const ShopCategories = (props) => {
-    //const [categories, setCategories] = useState(null);
 
     const location = useLocation();
     const dispatch = useDispatch();
 
     const store =  useSelector((state) => state.shop.store);
-    const categories = useSelector((state) => state.shop.categories);
+
+    const [categories, setCategories] = useState(null);
 
     useEffect(() => {
         axios.get(process.env.REACT_APP_API_ADDRESS + 'product/categories/' + store.storeId)
-            .then(res => dispatch(setCategories(res.data)))
-            .catch(err => /*setCategories(testData.shop.test*/ console.log(err));
+            .then(res => setCategories(dispatch(setCategories(res.data))))
+            .catch(err => console.log(err));
     }, [store.storeId]);
 
     return(
@@ -26,12 +26,11 @@ export const ShopCategories = (props) => {
             <Navbar></Navbar>
             <h1>Categories</h1>
             <ul>
-            {categories && categories?.map(category =>
-                <Link key={category.categoryId} state={{category: category}} to={"/shop/"+ store?.storeName +"/category/"+category?.categoryId}>
-                    <li key={category.categoryId}>{category.name}</li>
-                </Link>
-            )
-            }
+                {categories && categories?.map(category =>
+                    <Link key={category.categoryId} state={{category: category}} to={"/shop/"+ store?.storeName +"/category/"+category?.categoryId}>
+                        <li key={category.categoryId}>{category.name}</li>
+                    </Link>
+                )}
             </ul>
         </>
     )

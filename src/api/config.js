@@ -1,1 +1,1 @@
-const BASE_URL = '172.16.1.116:8004';
+const BASE_URL = "https://collecteverything.fr/api/v1/";
