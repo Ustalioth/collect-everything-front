@@ -6,7 +6,7 @@ import axios from "axios";
 import tokenAbi from 'ressources/CollectEverythingABI.json';
 
 export const Cart = (props) => {
-    const cart = useSelector((state) => state.shop.cart);
+    const cart = useSelector((state) => state.cart);
 
     const [customer, setCustomer] = useState({
         customerId: 0,
@@ -38,6 +38,7 @@ export const Cart = (props) => {
     }
 
     const handleCreateOrder = () => {
+        // si transaction de paiement réussit, on crée la commande en back
 
         const web3 = new Web3(Web3.givenProvider);
 

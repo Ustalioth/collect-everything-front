@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useParams} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'redux/cartSlice';
 
@@ -7,7 +7,7 @@ export const ProductCard = (props) => {
 
     const {product} = props;
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     let {shopName} = useParams();
 
