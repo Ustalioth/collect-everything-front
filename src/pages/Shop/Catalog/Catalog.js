@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import {useParams} from "react-router-dom";
+import axios from "axios";
 import { Navbar } from "pages/Shop/Navbar/Navbar";
 import { ProductCard } from "./Product/ProductCard";
 import { ShopCategorySelect } from "./Categories/ShopCategorySelect";
@@ -8,7 +10,11 @@ export const Catalog = () => {
 
     let { categoryId } = useParams();
 
-    const [products, setProducts] = useState([]);
+    const dispatch = useDispatch();
+
+    const storeProducts = useSelector((state) => state.shop.products);
+
+    const [products, setProducts] = useState(storeProducts);
     const [sorting, setSorting] = useState("asc");
     const [currentPage, setCurrentPage] = useState(1);
     const [maxNumberProductsPerPage, setMaxNumberProductsPerPage] = useState(8);
@@ -16,13 +22,23 @@ export const Catalog = () => {
 
     const handleChangeSorting = (e) => setSorting(e.target.value);
 
+    /*
     useEffect(() => {
         setProducts(products?.sort((p1, p2) => p1.price - p2.price));
     }, [sorting]);
+    */
 
     useEffect(() => {
         setPageCount(Math.ceil(products?.length/maxNumberProductsPerPage) || 1)
     }, [products, maxNumberProductsPerPage]);
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_ADDRESS + 'product/category/' + categoryId)
+            .then(res => {
+                console.log(res)
+                dispatch(setProducts(res.data.products));
+            })
+    }, [categoryId]);
 
     return (
         <>

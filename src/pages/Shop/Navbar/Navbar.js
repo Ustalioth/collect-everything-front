@@ -8,7 +8,7 @@ import { PersonCircle, Cart3 } from "react-bootstrap-icons";
 export const Navbar = (props) => {
   let {shopName} = useParams();
 
-  const cart = useSelector((state) => state.shop.cart);
+  const cart = useSelector((state) => state.cart);
 
   const getTotalQuantity = () => {
     return cart?.length;

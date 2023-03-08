@@ -5,7 +5,7 @@ import Web3 from "web3";
 import axios from "axios";
 
 export const Cart = (props) => {
-    const cart = useSelector((state) => state.shop.cart);
+    const cart = useSelector((state) => state.cart);
 
     const [customer, setCustomer] = useState({
         customerId: 0,
