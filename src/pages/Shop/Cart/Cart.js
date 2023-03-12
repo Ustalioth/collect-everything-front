@@ -17,9 +17,17 @@ export const Cart = (props) => {
         storeId: "",
     });
 
-    const [payment, setPayment] = useState({});
-
     const [walletCurrentAccount, setWalletCurrentAccount] = useState(null);
+
+    const getCartTotal = () => {
+        let totalQuantity = 0
+        let totalPrice = 0
+        cart.forEach(item => {
+            totalQuantity += item.quantity
+            totalPrice += item.price * item.quantity
+        })
+        return {totalPrice, totalQuantity}
+    }
 
     const handleConnectWallet = () => {
         window?.ethereum
@@ -172,7 +180,7 @@ export const Cart = (props) => {
                         <h2>Résumé</h2>
                         <div className="d-flex justify-content-between">
                             <div>Total panier</div>
-                            <div>{} €</div>
+                            <div>{getCartTotal().totalPrice} €</div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div>Réduction</div>

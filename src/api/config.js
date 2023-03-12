@@ -1,1 +1,1 @@
-const BASE_URL = "https://collecteverything.fr/api/v1/";
+export const API_BASE_URI = process.env.REACT_APP_API_ADDRESS;

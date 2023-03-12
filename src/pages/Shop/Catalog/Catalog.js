@@ -12,33 +12,37 @@ export const Catalog = () => {
 
     const dispatch = useDispatch();
 
-    const storeProducts = useSelector((state) => state.shop.products);
+    const [selectedCategory, setSelectedCategory] = useState({categoryId: parseInt(categoryId)});
 
-    const [products, setProducts] = useState(storeProducts);
+    const [productsByCategory, setProductsByCategory] = useState([]);
     const [sorting, setSorting] = useState("asc");
     const [currentPage, setCurrentPage] = useState(1);
     const [maxNumberProductsPerPage, setMaxNumberProductsPerPage] = useState(8);
     const [pageCount, setPageCount] = useState(1);
 
-    const handleChangeSorting = (e) => setSorting(e.target.value);
-
-    /*
-    useEffect(() => {
-        setProducts(products?.sort((p1, p2) => p1.price - p2.price));
-    }, [sorting]);
-    */
-
-    useEffect(() => {
-        setPageCount(Math.ceil(products?.length/maxNumberProductsPerPage) || 1)
-    }, [products, maxNumberProductsPerPage]);
+    const handleChangeSorting = (e) => {
+        setSorting(e.target.value);
+        if (e.target.value === "asc") {
+            setProductsByCategory(productsByCategory?.sort((p1, p2) => p1.price - p2.price));
+        } else {
+            setProductsByCategory(productsByCategory?.sort((p1, p2) => p2.price - p1.price));
+        };
+    }
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API_ADDRESS + 'product/category/' + categoryId)
+        setPageCount(Math.ceil(productsByCategory?.length/maxNumberProductsPerPage) || 1)
+    }, [productsByCategory, maxNumberProductsPerPage]);
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API_ADDRESS + '/product/category/' + selectedCategory?.categoryId)
             .then(res => {
-                console.log(res)
-                dispatch(setProducts(res.data.products));
+                if (sorting === "asc") {
+                    setProductsByCategory(res.data.products?.sort((p1, p2) => p1.price - p2.price));
+                } else {
+                    setProductsByCategory(res.data.products?.sort((p1, p2) => p2.price - p1.price));
+                }
             })
-    }, [categoryId]);
+    }, [selectedCategory?.categoryId]);
 
     return (
         <>
@@ -47,20 +51,22 @@ export const Catalog = () => {
             <div>
                 <label>
                     Filtrer par : 
-                    <ShopCategorySelect categoryId={categoryId} setProducts={setProducts} />
+                    <ShopCategorySelect 
+                        selectedCategory={selectedCategory} 
+                        setSelectedCategory={setSelectedCategory} 
+                    />
                 </label>
                 <label>
                     Trier : 
-                    <select onChange={handleChangeSorting}>
+                    <select onChange={handleChangeSorting} value={sorting}>
                         <option value={"asc"}>du - cher au + cher</option>
                         <option value={"desc"}>du + cher au - cher</option>
                     </select>
                 </label>
             </div>
             <div className={"d-flex justify-content-around"}>
-                {(products?.length > 0) &&
-                    products?.map(product => 
-                        <ProductCard key={product?.productId} product={product} />
+                {(productsByCategory?.length > 0) &&
+                    productsByCategory?.map(product => <ProductCard key={product?.productId} product={product} />
                 )}
             </div>
 
