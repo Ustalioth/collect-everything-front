@@ -1,0 +1,19 @@
+{
+    "button-text": {
+        "save": "save",
+        "cancel": "cancel",
+        "add": "add",
+        "update": "update",
+        "delete": "delete"
+    },
+    "message": {
+        "failed": "Operation failed.",
+        "error": "An error occured.",
+        "success": "Successfully executed.",
+        "confirm": "Please confirm before proceeding.",
+        "incomplete": "Please, fill mandatory fields."
+    },
+    "shop": {
+        "homepage-welcome": "Welcome!"
+    }
+}
