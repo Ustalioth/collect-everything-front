@@ -7,10 +7,12 @@ import {
     selectShop, 
     fetchStoreByName,
 } from "redux/shopSlice";
+import {useTranslation} from 'react-i18next';
 
 export const HomePage = () => {
     let {shopName} = useParams();
 
+    const {t} = useTranslation();
     const dispatch = useDispatch();
     const shop = useSelector(selectShop);
 
@@ -25,7 +27,7 @@ export const HomePage = () => {
     return (
         <>
             <Navbar />
-            <h1>Bienvenue sur la boutique {shopName}</h1>
+            <h1>{ t('shop.homepage-welcome') } {shopName}</h1>
             <div className="d-flex">
                 {(shop?.products && (shop.products?.length > 0) && shop.products?.map(product =>
                     <ProductCard key={product?.productId} product={product}/>

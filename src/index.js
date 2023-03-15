@@ -17,6 +17,7 @@ import {ProductDetails} from "pages/Shop/Catalog/Product/ProductDetails";
 import {ShopLogin} from "pages/Shop/Account/ShopLogin";
 import { Catalog } from "pages/Shop/Catalog/Catalog";
 import { Cart } from "pages/Shop/Cart/Cart";
+import 'translation/i18n';
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

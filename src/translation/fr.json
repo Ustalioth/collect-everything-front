@@ -1,5 +1,28 @@
 {
-    "fr": {
-      "save": "enregistrer"
-    }
+  "button-text": {
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "add": "Ajouter",
+      "update": "Mettre à jour",
+      "delete": "Supprimer"
+  },
+  "message": {
+      "failed": "Echec.",
+      "error": "Erreur.",
+      "success": "Succès.",
+      "confirm": "Confirmer.",
+      "incomplete": "Veuillez compléter les champs obligatoires."
+  },
+  "shop": {
+      "homepage-welcome": "Bienvenue sur"
+  },
+  "navigation": {
+      "homepage": "Accueil",
+      "search": "Rechercher",
+      "categories": "Categories",
+      "account": "Mon compte"
+  },
+  "cart": {
+      "add": "Ajouter au panier"
+  }
 }

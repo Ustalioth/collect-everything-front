@@ -14,6 +14,15 @@
         "incomplete": "Please, fill mandatory fields."
     },
     "shop": {
-        "homepage-welcome": "Welcome!"
+        "homepage-welcome": "Welcome to"
+    },
+    "navigation": {
+        "homepage": "Homepage",
+        "search": "Search",
+        "categories": "Categories",
+        "account": "My account"
+    },
+    "cart": {
+        "add": "Add to cart"
     }
 }

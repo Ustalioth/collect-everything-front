@@ -2,11 +2,13 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { addToCart } from 'redux/cartSlice';
+import { useTranslation } from "react-i18next";
 
 export const ProductCard = (props) => {
 
     const {product} = props;
 
+    const { t } = useTranslation();
     const dispatch = useDispatch();
 
     let {shopName} = useParams();
@@ -28,7 +30,7 @@ export const ProductCard = (props) => {
                     onClick={() => dispatch(addToCart(product))}
                     className="btn btn-primary"
                 >
-                    Ajouter au panier
+                    { t('cart.add') }
                 </button>
             </div>
         </>
