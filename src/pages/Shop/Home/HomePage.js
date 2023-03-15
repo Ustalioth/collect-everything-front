@@ -10,9 +10,9 @@ import {
 import {useTranslation} from 'react-i18next';
 
 export const HomePage = () => {
-    let {shopName} = useParams();
+    let { shopName } = useParams();
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const shop = useSelector(selectShop);
 

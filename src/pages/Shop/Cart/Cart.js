@@ -4,20 +4,22 @@ import {Navbar} from "pages/Shop/Navbar/Navbar";
 import Web3 from "web3";
 import axios from "axios";
 import tokenAbi from 'ressources/CollectEverythingABI.json';
+import {useTranslation} from 'react-i18next';
 
 export const Cart = (props) => {
-    const cart = useSelector((state) => state.cart);
 
-    const [customer, setCustomer] = useState({
-        customerId: 0,
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        storeId: "",
-    });
+    const { t } = useTranslation();
+    const store = useSelector((state) => state.shop.store);
+    const cart = useSelector((state) => state.cart);
+    const user = useSelector((state) => state.user);
 
     const [walletCurrentAccount, setWalletCurrentAccount] = useState(null);
+
+    const [customerInfo, setCustomerInfo] = useState({});
+
+    const handleChangeCustomerInfo = (e) => {
+        setCustomerInfo({...customerInfo, [e.target.name]: e.target.value});
+    }
 
     const getCartTotal = () => {
         let totalQuantity = 0
