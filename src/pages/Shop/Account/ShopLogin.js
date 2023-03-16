@@ -24,13 +24,9 @@ export const ShopLogin = () => {
         dispatch(login(credentials.email, credentials.password));
     }
 
-    useEffect(() => {
-
-    }, [token]);
-
     return(
         <>
-            <Navbar></Navbar>
+            <Navbar />
             <h1>Login</h1>
             <input type={"text"} name={"email"} placeholder="Email" value={credentials.email} onChange={handleChange} />
             <input type={"password"} name={"password"} placeholder="Password" value={credentials.password} onChange={handleChange} />

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import { logout } from "redux/authSlice";
 import { Navbar as ShopNavbar } from "./Navbar.styles";
 import { SearchBar } from "./SearchBar/SearchBar";
 import { PersonCircle, Cart3 } from "react-bootstrap-icons";
@@ -10,6 +11,8 @@ export const Navbar = (props) => {
   let {shopName} = useParams();
 
   const {t, i18n} = useTranslation();
+
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
   const getTotalQuantity = () => {
@@ -27,6 +30,7 @@ export const Navbar = (props) => {
       </Link>
       <span onClick={() => i18n.changeLanguage('fr')}>FR</span>
       <span onClick={() => i18n.changeLanguage('en')}>EN</span>
+      <span onClick={() => dispatch(logout())}>déconnexion</span>
       <Link to={`/shop/${shopName}/cart`}>
         <Cart3 />
         <p>{getTotalQuantity() || 0}</p>
