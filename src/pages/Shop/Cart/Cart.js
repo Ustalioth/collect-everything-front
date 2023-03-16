@@ -1,25 +1,39 @@
-import React, {useState} from "react";
-import {useSelector} from 'react-redux';
+import React, {useState, useEffect} from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import { changeQuantity, removeItem } from "redux/cartSlice";
 import {Navbar} from "pages/Shop/Navbar/Navbar";
 import Web3 from "web3";
 import axios from "axios";
 import tokenAbi from 'ressources/CollectEverythingABI.json';
 import {useTranslation} from 'react-i18next';
 
+const TAX_RATE = 0.05;
+
 export const Cart = (props) => {
 
     const { t } = useTranslation();
+    const dispatch = useDispatch();
     const store = useSelector((state) => state.shop.store);
     const cart = useSelector((state) => state.cart);
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user) || {};
 
     const [walletCurrentAccount, setWalletCurrentAccount] = useState(null);
 
-    const [customerInfo, setCustomerInfo] = useState({});
+    const [customerInfo, setCustomerInfo] = useState({...user, ethAddress: "0x000000"});
 
     const handleChangeCustomerInfo = (e) => {
         setCustomerInfo({...customerInfo, [e.target.name]: e.target.value});
     }
+
+    const [orderSummary, setOrderSummary] = useState({
+        basePrice: 0,
+        discount: 0,
+        deliveryFee: 0,
+        subTotal: 0,
+        taxes: 0,
+        totalPrice: 0,
+        totalQuantity: 0
+    });
 
     const getCartTotal = () => {
         let totalQuantity = 0
@@ -32,19 +46,31 @@ export const Cart = (props) => {
     }
 
     const handleConnectWallet = () => {
+        let {ethAddress, ...rest} = customerInfo;
+
         window?.ethereum
             .request({method: 'eth_accounts'})
             .then(connectedAccounts => {
                 if (connectedAccounts.length > 0) {
                     setWalletCurrentAccount(connectedAccounts[0]);
+                    setCustomerInfo({...rest, ethAddress: connectedAccounts[0]});
                 } else {
                     window?.ethereum
                         .request({method: 'eth_requestAccounts'})
-                        .then(availableAccounts => setWalletCurrentAccount(availableAccounts[0]))
-                        .catch(err => setWalletCurrentAccount(null));
+                        .then(availableAccounts => {
+                            setWalletCurrentAccount(availableAccounts[0]);
+                            setCustomerInfo({...rest, ethAddress: availableAccounts[0]});
+                        })
+                        .catch(err => {
+                            setWalletCurrentAccount(null);
+                            setCustomerInfo({...rest, ethAddress: "0x000000"});
+                        });
                 }
             })
-            .catch(err => setWalletCurrentAccount(null));
+            .catch(err => {
+                setWalletCurrentAccount(null);
+                setCustomerInfo({...rest, ethAddress: "0x000000"});
+            });
     }
 
     const handleCreateOrder = () => {
@@ -107,6 +133,41 @@ export const Cart = (props) => {
 
     }
 
+    const handleChangeItemQuantity = (productId, quantity) => {
+        dispatch(changeQuantity({productId: productId, quantity: quantity}))
+    }
+
+    const computeDeliveryFee = (amount) => {
+        return ((amount === 0) || (amount >= 100)) ? 0 : 10;
+    }
+
+    useEffect(() => {
+        let basePrice = 0;
+        let discount = 0;
+        let deliveryFee = 0;
+        let subTotal = 0;
+        let taxes = 0;
+        let totalPrice = 0;
+        let totalQuantity = 0;
+        cart.forEach(item => {
+            totalQuantity += item.quantity;
+            basePrice += Math.round((item.price * item.quantity) * 100) / 100;
+        });
+        deliveryFee = computeDeliveryFee(basePrice);
+        subTotal = Math.round((basePrice - discount + deliveryFee) * 100) / 100;
+        taxes = Math.round((subTotal * TAX_RATE) * 100) / 100;
+        totalPrice = Math.round((subTotal + taxes) * 100) / 100;
+        setOrderSummary({
+            basePrice: basePrice,
+            discount: discount,
+            deliveryFee: deliveryFee,
+            subTotal: subTotal,
+            taxes: taxes,
+            totalPrice: totalPrice,
+            totalQuantity: totalQuantity
+        })
+    }, [cart]);
+
     return (
         <>
             <Navbar/>
@@ -122,7 +183,7 @@ export const Cart = (props) => {
                                 <th className="col-1">Prix</th>
                                 <th className="col-1">Quantité</th>
                                 <th className="col-1">Total</th>
-                                <th className="col-1"></th>
+                                <th className="col-1">Supprimer</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -130,9 +191,9 @@ export const Cart = (props) => {
                                 <tr key={item?.productId}>
                                     <td>{item?.name}</td>
                                     <td>{item?.price}</td>
-                                    <td><input type="number" value={item?.quantity}/></td>
+                                    <td><input type="number" defaultValue={item?.quantity} onChange={(e) => handleChangeItemQuantity(item.productId, e.target.value)} /></td>
                                     <td>{item?.quantity * item?.price}</td>
-                                    <td></td>
+                                    <td><span onClick={() => dispatch(removeItem(item.productId))}>Del</span></td>
                                 </tr>
                             )}
                             </tbody>
@@ -142,25 +203,25 @@ export const Cart = (props) => {
                             <div className="col-6">
                                 <h5>Facturation</h5>
                                 <div className="input-group input-group-sm mb-3">
-                                    <input type="text" placeholder="Prénom"/>
+                                    <input name={"firstname"} type="text" placeholder="Prénom" onChange={handleChangeCustomerInfo} />
                                 </div>
                                 <div className="input-group input-group-sm mb-3">
-                                    <input type="text" placeholder="Nom"/>
+                                    <input name={"lastname"} type="text" placeholder="Nom" onChange={handleChangeCustomerInfo} />
                                 </div>
                                 <div className="input-group input-group-sm mb-3">
-                                    <input type="text" placeholder="Addresse"/>
+                                    <input name={"address"} type="text" placeholder="Addresse" onChange={handleChangeCustomerInfo} />
                                 </div>
                                 <div className="input-group input-group-sm mb-3">
-                                    <input type="text" placeholder="Code Postal"/>
+                                    <input name={"zipcode"}  type="text" placeholder="Code Postal" onChange={handleChangeCustomerInfo} />
                                 </div>
                                 <div className="input-group input-group-sm mb-3">
-                                    <input type="text" placeholder="Ville"/>
+                                    <input name={"city"} type="text" placeholder="Ville" onChange={handleChangeCustomerInfo} />
                                 </div>
                                 <div className="input-group input-group-sm mb-3">
-                                    <input type="text" placeholder="Téléphone"/>
+                                    <input name={"phoneNumber"} type="text" placeholder="Téléphone" onChange={handleChangeCustomerInfo} />
                                 </div>
                                 <div className="input-group input-group-sm mb-3">
-                                    <input type="text" placeholder="E-mail"/>
+                                    <input name={"email"} type="text" placeholder="E-mail" onChange={handleChangeCustomerInfo} />
                                 </div>
                             </div>
                             <div className="col-6">
@@ -182,27 +243,27 @@ export const Cart = (props) => {
                         <h2>Résumé</h2>
                         <div className="d-flex justify-content-between">
                             <div>Total panier</div>
-                            <div>{getCartTotal().totalPrice} €</div>
+                            <div>{orderSummary.basePrice} €</div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div>Réduction</div>
-                            <div>{} €</div>
+                            <div>{orderSummary.discount} €</div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div>Livraison</div>
-                            <div>{} €</div>
+                            <div>{orderSummary.deliveryFee} €</div>
                         </div>
                         <div className="d-flex justify-content-between border-top">
                             <div>Sous-total</div>
-                            <div>{} €</div>
+                            <div>{orderSummary.subTotal} €</div>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div>Taxes</div>
-                            <div>{} €</div>
+                            <div>{orderSummary.taxes} €</div>
                         </div>
                         <div className="d-flex justify-content-between border-top">
                             <div>Total</div>
-                            <div>{} €</div>
+                            <div>{orderSummary.totalPrice} €</div>
                         </div>
                         <div>
                             <button
