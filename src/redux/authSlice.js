@@ -18,7 +18,7 @@ export const {
 
 export const login = (email, password) => (dispatch) => {
   return serviceApi.loginUser(email, password).then(
-    response => dispatch(setToken(response?.data?.split(" ")[1] || "")),
+    ({status, data}) => dispatch(setToken(data?.split(" ")[1] || null)),
     error => dispatch(setToken(null))
   );
 }

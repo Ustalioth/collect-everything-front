@@ -25,11 +25,11 @@ export const Navbar = (props) => {
       <SearchBar />
       <Link to={`/shop/${shopName}`}>{ t('navigation.homepage') }</Link>
       <Link state={{shopName: shopName}} to={`/shop/${shopName}/categories`}>{ t('navigation.categories') }</Link>
+      <span onClick={() => i18n.changeLanguage('fr')}>FR</span>
+      <span onClick={() => i18n.changeLanguage('en')}>EN</span>
       <Link to={`/shop/${shopName}/login`}>
         <PersonCircle />
       </Link>
-      <span onClick={() => i18n.changeLanguage('fr')}>FR</span>
-      <span onClick={() => i18n.changeLanguage('en')}>EN</span>
       <span onClick={() => dispatch(logout())}>déconnexion</span>
       <Link to={`/shop/${shopName}/cart`}>
         <Cart3 />

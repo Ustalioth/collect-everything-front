@@ -17,14 +17,14 @@ export const {
 
 export const registerCustomer = (customer) => (dispatch) => {
   return serviceApi.registerCustomer({...customer, role: "USER"}).then(
-    response => dispatch(setUser(response.data)),
+    ({status, data}) => dispatch(setUser(data)),
     error => dispatch(setUser(null))
   );
 }
 
 export const updateCustomer = (customer) => (dispatch) => {
   return serviceApi.updateCustomer({...customer, role: "USER"}).then(
-    response => dispatch(setUser(response.data)),
+    ({status, data}) => dispatch(setUser(data)),
     error => dispatch(setUser(null))
   );
 }

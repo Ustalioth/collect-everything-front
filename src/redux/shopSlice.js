@@ -36,11 +36,11 @@ export const selectCustomizations = state => state.shop.settings;
 
 export const fetchStoreByName = (name) => (dispatch) => {
   return serviceApi.getStoreByName(name).then(
-    response => {
-      dispatch(setStore(response.data));
-      dispatch(fetchStoreCategories(response.data.storeId));
-      dispatch(fetchStoreProducts(response.data.storeId));
-      dispatch(fetchStoreCutomizations(response.data.storeId));
+    ({status, data}) => {
+      dispatch(setStore(data));
+      dispatch(fetchStoreCategories(data.storeId));
+      dispatch(fetchStoreProducts(data.storeId));
+      dispatch(fetchStoreCutomizations(data.storeId));
     },
     error => dispatch(setStore({}))
   );
@@ -48,21 +48,21 @@ export const fetchStoreByName = (name) => (dispatch) => {
 
 export const fetchStoreCategories = (storeId) => async (dispatch) => {
   return serviceApi.getStoreCategories(storeId).then(
-    response => dispatch(setCategories(response.data)),
+    ({status, data}) => dispatch(setCategories(data)),
     error => dispatch(setCategories([]))
   );
 }
 
 export const fetchStoreProducts = (storeId) => async (dispatch) => {
   return serviceApi.getStoreProducts(storeId).then(
-    response => dispatch(setProducts(response.data)),
+    ({status, data}) => dispatch(setProducts(data)),
     error => dispatch(setProducts([]))
   );
 }
 
 export const fetchStoreCutomizations = (storeId) => async (dispatch) => {
   return serviceApi.getStoreCustomizations(storeId).then(
-    response => dispatch(setCustomizations(response.data)),
+    ({status, data}) => dispatch(setCustomizations(data)),
     error => dispatch(setCustomizations({}))
   );
 }
