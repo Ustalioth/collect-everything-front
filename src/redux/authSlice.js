@@ -6,7 +6,7 @@ const authSlice = createSlice({
   name: 'token',
   initialState: null,
   reducers: {
-    setToken: (state, action) => { state = action.payload },
+    setToken: (state, action) => action.payload,
   }
 });
 
@@ -17,8 +17,8 @@ export const {
 } = authSlice.actions;
 
 export const login = (email, password) => (dispatch) => {
-  return serviceApi.loginUser({email, password}).then(
-    response => dispatch(setToken(response.data)),
+  return serviceApi.loginUser(email, password).then(
+    response => dispatch(setToken(response?.data?.split(" ")[1] || "")),
     error => dispatch(setToken(null))
   );
 }

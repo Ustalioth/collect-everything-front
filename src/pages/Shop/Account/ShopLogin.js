@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navbar } from "pages/Shop/Navbar/Navbar";
 import { login } from "redux/authSlice";
 
 export const ShopLogin = () => {
 
+    const dispatch = useDispatch();
+    
+    const token = useSelector(state => state.token);
+
     const [credentials, setCredentials] = useState({
         email: "",
         password: "",
-        status: ""
+        status: "",
+        attempts: ""
     });
 
     const handleChange = (e) => {
@@ -15,8 +21,12 @@ export const ShopLogin = () => {
     }
 
     const handleSubmit = () => {
-
+        dispatch(login(credentials.email, credentials.password));
     }
+
+    useEffect(() => {
+
+    }, [token]);
 
     return(
         <>
