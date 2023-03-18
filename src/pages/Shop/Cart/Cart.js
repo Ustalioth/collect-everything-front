@@ -6,6 +6,8 @@ import Web3 from "web3";
 import axios from "axios";
 import tokenAbi from 'ressources/CollectEverythingABI.json';
 import {useTranslation} from 'react-i18next';
+import {API_BASE_URI} from "../../../api/config";
+import instance from "../../../services/Axios/AxiosInstance";
 
 const TAX_RATE = 0.05;
 
@@ -84,6 +86,7 @@ export const Cart = (props) => {
         const apiUrl = `https://min-api.cryptocompare.com/data/price?fsym=${ETHEREUM_SYMBOL}&tsyms=${CURRENCY}`;
 
         let ethPrice;
+        let merchantAddress;
 
         axios.get(apiUrl)
             .then(response => {
@@ -95,26 +98,43 @@ export const Cart = (props) => {
                 console.log(error);
             });
 
+        instance.get(API_BASE_URI + "/store/" + store.storeId)
+            .then(response => {
+                merchantAddress = response.data['ethAddress'];
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
         function createOrderAndPay(){
-            if (ethPrice !== undefined) {
+            if (
+                ethPrice !== undefined
+                && merchantAddress !== undefined
+                && store.storeId !== undefined
+                && store.user.userId !== undefined
+                ) {
 
-                // call create order
-                // ...
+                let params = '';
 
-                // call update newly created order with purchase list
-                // ...
+                cart.forEach(item => {
+                    for (let index = 0; index < item.quantity; index++) {
+                        params += `{"price" : ${item.price}, "productId" : ${item.productId}},`
+                    }
+                });
+
+                //Create order
+                instance.put(API_BASE_URI + store.storeId + "/" + store.user.userId, params);
 
                 // call payment
-                let priceInEur = 100; // @TODO Valeur FICTIVE à remplacer par la valeur réelle du panier en euros
+                let priceInEur = 0; 
+                cart.map((item) => {
+                    priceInEur += item.price * item.quantity
+                })
+
                 let priceToPayInEth = String(priceInEur / ethPrice);
 
-                console.log('web3 : ' + web3);
                 // create an instance of the ERC20 token contract
-                const tokenContract = new web3.eth.Contract(tokenAbi, '0xf07b18b9dc2e99ee711c12694b4264ff0f3a045a');
-                console.log('tokenContract : ' + tokenContract);
-
-                let merchantAddress = '0x9343e240EED5Bc29b93d682d2003a3527F8B28fA';
-
+                const tokenContract = new web3.eth.Contract(tokenAbi, '0x9B46DFCaCc690959f3C154950e252b7728DBCc85');
 
                 // call the myMethod function on the smart contract and send the tokens
                 //@TODO remplacer l'adresse par celle du marchant
