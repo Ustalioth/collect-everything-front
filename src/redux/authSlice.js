@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import serviceApi from 'api/serviceApi';
-import { setUser } from './userSlice';
+import { setUser, setUserUsingEmail } from './userSlice';
 
 const authSlice = createSlice({
   name: 'token',
@@ -18,8 +18,14 @@ export const {
 
 export const login = (email, password) => (dispatch) => {
   return serviceApi.loginUser(email, password).then(
-    ({status, data}) => dispatch(setToken(data?.split(" ")[1] || null)),
-    error => dispatch(setToken(null))
+    ({status, data}) => {
+      dispatch(setToken(data?.split(" ")[1] || null));
+      dispatch(setUserUsingEmail(email));
+    },
+    error => {
+      dispatch(setToken(null));
+      dispatch(setUser(null));
+    }
   );
 }
 

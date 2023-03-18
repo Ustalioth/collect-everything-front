@@ -10,6 +10,7 @@ const serviceApi = {
     registerCustomer: (customer) => instance.put(`${API_BASE_URI}/authentication/save`, customer),
     updateCustomer: (customer) => instance.post(`${API_BASE_URI}/authentication/save`, customer),
     loginUser: (email, password) => instance.post(`${API_BASE_URI}/authentication/login`, {email, password}),
+    getUserByEmail: (email) => instance.get(`${API_BASE_URI}/customer/email/${email}`),
 }
 
 export default serviceApi;

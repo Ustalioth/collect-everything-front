@@ -5,7 +5,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: null,
   reducers: {
-    setUser: (state, action) => { state = action.payload },
+    setUser: (state, action) => action.payload,
   }
 });
 
@@ -24,6 +24,13 @@ export const registerCustomer = (customer) => (dispatch) => {
 
 export const updateCustomer = (customer) => (dispatch) => {
   return serviceApi.updateCustomer({...customer, role: "USER"}).then(
+    ({status, data}) => dispatch(setUser(data)),
+    error => dispatch(setUser(null))
+  );
+}
+
+export const setUserUsingEmail = (email) => (dispatch) => {
+  return serviceApi.getUserByEmail(email).then(
     ({status, data}) => dispatch(setUser(data)),
     error => dispatch(setUser(null))
   );
