@@ -134,10 +134,9 @@ export const Cart = (props) => {
                 let priceToPayInEth = String(priceInEur / ethPrice);
 
                 // create an instance of the ERC20 token contract
-                const tokenContract = new web3.eth.Contract(tokenAbi, '0x9B46DFCaCc690959f3C154950e252b7728DBCc85');
+                const tokenContract = new web3.eth.Contract(tokenAbi, process.env.REACT_APP_API_ADDRESS);
 
                 // call the myMethod function on the smart contract and send the tokens
-                //@TODO remplacer l'adresse par celle du marchant
                 tokenContract.methods.pay(merchantAddress).send({
                     from: walletCurrentAccount,
                     value: web3.utils.toHex(web3.utils.toWei(priceToPayInEth, "ether"))
