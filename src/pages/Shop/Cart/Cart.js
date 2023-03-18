@@ -18,6 +18,7 @@ export const Cart = (props) => {
     const store = useSelector((state) => state.shop.store);
     const cart = useSelector((state) => state.cart);
     const user = useSelector((state) => state.user) || {};
+    const token = useSelector((state) => state.token);
 
     const [walletCurrentAccount, setWalletCurrentAccount] = useState(null);
 
@@ -88,19 +89,22 @@ export const Cart = (props) => {
         let ethPrice;
         let merchantAddress;
 
-        axios.get(apiUrl)
-            .then(response => {
-                console.log(response);
-                ethPrice = response.data[CURRENCY];
-                createOrderAndPay();
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
         instance.get(API_BASE_URI + "/store/" + store.storeId)
             .then(response => {
                 merchantAddress = response.data['ethAddress'];
+
+                axios.get(apiUrl)
+                    .then(response => {
+                        console.log(response);
+                        ethPrice = response.data[CURRENCY];
+
+                        console.log(ethPrice, merchantAddress, store?.storeId, token);
+
+                        createOrderAndPay();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             })
             .catch(error => {
                 console.log(error);
@@ -110,8 +114,8 @@ export const Cart = (props) => {
             if (
                 ethPrice !== undefined
                 && merchantAddress !== undefined
-                && store.storeId !== undefined
-                && store.user.userId !== undefined
+                && store?.storeId !== undefined
+                && token !== undefined
                 ) {
 
                 let params = '';
@@ -122,28 +126,37 @@ export const Cart = (props) => {
                     }
                 });
 
+                let orderId;
+
                 //Create order
-                instance.put(API_BASE_URI + store.storeId + "/" + store.user.userId, params);
+                instance.put(API_BASE_URI + store.storeId + "/" + store.user.userId, params)
+                    .then(response => {
+                        orderId = response.data['orderId'];
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
 
-                // call payment
-                let priceInEur = 0; 
-                cart.map((item) => {
-                    priceInEur += item.price * item.quantity
-                })
+                if(orderId !== undefined){
+                    // call payment
+                    let priceInEur = 0;
+                    cart.map((item) => {
+                        priceInEur += item.price * item.quantity
+                    })
 
-                let priceToPayInEth = String(priceInEur / ethPrice);
+                    let priceToPayInEth = String(priceInEur / ethPrice);
 
-                // create an instance of the ERC20 token contract
-                const tokenContract = new web3.eth.Contract(tokenAbi, process.env.REACT_APP_API_ADDRESS);
+                    // create an instance of the ERC20 token contract
+                    const tokenContract = new web3.eth.Contract(tokenAbi, process.env.REACT_APP_API_ADDRESS);
 
-                // call the myMethod function on the smart contract and send the tokens
-                tokenContract.methods.pay(merchantAddress).send({
-                    from: walletCurrentAccount,
-                    value: web3.utils.toHex(web3.utils.toWei(priceToPayInEth, "ether"))
-                }).on('receipt', (receipt) => {
-                    console.log('Transaction receipt:', receipt);
-                });
-
+                    // call the myMethod function on the smart contract and send the tokens
+                    tokenContract.methods.pay(merchantAddress, orderId, token).send({
+                        from: walletCurrentAccount,
+                        value: web3.utils.toHex(web3.utils.toWei(priceToPayInEth, "ether"))
+                    }).on('receipt', (receipt) => {
+                        console.log('Transaction receipt:', receipt);
+                    });
+                }
         }
 
             // call update OrderStatus (order paid or not paid)
