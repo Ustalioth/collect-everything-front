@@ -1,4 +1,5 @@
 import axios from "axios";
+import storage from 'redux-persist/lib/storage';
 
 const instance = axios.create({
     baseURL : process.env.REACT_APP_API_ADDRESS,
@@ -7,9 +8,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+        let token = JSON.parse(window.localStorage.getItem('persist:root')).token.replace(/(^"|"$)/g, '') || "";
+        if ((token !== 'null') && (token !== "")) {
+            config.headers['Authorization'] = `Bearer ${token}`;
         }
         return config;
     },
