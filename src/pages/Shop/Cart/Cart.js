@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import {API_BASE_URI} from "../../../api/config";
 import instance from "../../../services/Axios/AxiosInstance";
 
+
 const TAX_RATE = 0.05;
 
 export const Cart = (props) => {
