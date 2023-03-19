@@ -6,8 +6,8 @@ import Web3 from "web3";
 import axios from "axios";
 import tokenAbi from 'ressources/CollectEverythingABI.json';
 import {useTranslation} from 'react-i18next';
-import {API_BASE_URI} from "../../../api/config";
-import instance from "../../../services/Axios/AxiosInstance";
+import {API_BASE_URI} from "api/config";
+import instance from "services/Axios/AxiosInstance";
 
 
 const TAX_RATE = 0.05;
