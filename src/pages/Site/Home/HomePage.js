@@ -1,8 +1,6 @@
 import React from "react";
-import { Navbar } from "../../../components/Navbar/Navbar";
 import { OfferCard } from "../../../components/OfferCard/OfferCard";
 import { HomePageStyles } from "./HomePage.styles";
-import { Logo } from "components/Logo/Logo";
 export const HomePage = (props) => (
   <HomePageStyles>
     <div>

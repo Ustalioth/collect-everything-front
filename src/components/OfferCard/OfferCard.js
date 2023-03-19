@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import colors from "styles/colors";
 import { OfferCardStyle } from "./OfferCard.styles";
 
 export const OfferCard = (props) => (
@@ -11,7 +9,7 @@ export const OfferCard = (props) => (
         <span>{props.type} Membership</span>
         <span>{props.price}€</span>
         <span>{props.description}</span>
-        <Link to="/checkout">
+        <Link to="/form">
           <button>Select</button>
         </Link>
       </div>
