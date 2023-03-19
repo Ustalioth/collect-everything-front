@@ -90,16 +90,13 @@ export const Cart = (props) => {
         let ethPrice;
         let merchantAddress;
 
-        instance.get(API_BASE_URI + "/store/" + store.storeId)
+        axios.get(API_BASE_URI + "/store/" + store.storeId)
             .then(response => {
                 merchantAddress = response.data['ethAddress'];
 
                 axios.get(apiUrl)
                     .then(response => {
-                        console.log(response);
                         ethPrice = response.data[CURRENCY];
-
-                        console.log(ethPrice, merchantAddress, store?.storeId, token);
 
                         createOrderAndPay();
                     })
@@ -119,45 +116,52 @@ export const Cart = (props) => {
                 && token !== undefined
                 ) {
 
-                let params = '';
+                let params = '[';
 
                 cart.forEach(item => {
                     for (let index = 0; index < item.quantity; index++) {
-                        params += `{"price" : ${item.price}, "productId" : ${item.productId}},`
+                        params += `{"price" : ${item.price}, "productId" : ${item.productId}}`
+                        if(index !== item.quantity - 1){
+                            params += ',';
+                        }
                     }
                 });
+
+                params += ']';
 
                 let orderId;
 
                 //Create order
-                instance.put(API_BASE_URI + store.storeId + "/" + store.user.userId, params)
+                instance.put(API_BASE_URI + "/order/save/" + store.storeId + "/" + user.customerId, JSON.parse(params))
                     .then(response => {
-                        orderId = response.data['orderId'];
+                        orderId = response.data?.orderId;
+
+                        if(orderId !== undefined){
+                            // call payment
+                            let priceInEur = 0;
+                            cart.map((item) => {
+                                priceInEur += item.price * item.quantity
+                            })
+
+                            let priceToPayInEth = String(priceInEur / ethPrice);
+
+                            // create an instance of the ERC20 token contract
+                            const tokenContract = new web3.eth.Contract(tokenAbi, "0x4f0d7ade7c2806deaf1dc7499c9edbd2f558b282");
+
+                            // call the myMethod function on the smart contract and send the tokens
+                            tokenContract.methods.pay(merchantAddress, orderId, token).send({
+                                from: walletCurrentAccount,
+                                value: web3.utils.toHex(web3.utils.toWei(priceToPayInEth, "ether"))
+                            }).on('receipt', (receipt) => {
+                                console.log('Transaction receipt:', receipt);
+                            });
+                        }
                     })
                     .catch(error => {
                         console.log(error);
                     });
 
-                if(orderId !== undefined){
-                    // call payment
-                    let priceInEur = 0;
-                    cart.map((item) => {
-                        priceInEur += item.price * item.quantity
-                    })
 
-                    let priceToPayInEth = String(priceInEur / ethPrice);
-
-                    // create an instance of the ERC20 token contract
-                    const tokenContract = new web3.eth.Contract(tokenAbi, process.env.REACT_APP_API_ADDRESS);
-
-                    // call the myMethod function on the smart contract and send the tokens
-                    tokenContract.methods.pay(merchantAddress, orderId, token).send({
-                        from: walletCurrentAccount,
-                        value: web3.utils.toHex(web3.utils.toWei(priceToPayInEth, "ether"))
-                    }).on('receipt', (receipt) => {
-                        console.log('Transaction receipt:', receipt);
-                    });
-                }
         }
 
             // call update OrderStatus (order paid or not paid)
