@@ -26,7 +26,7 @@ root.render(
   
   <BrowserRouter>
     <Provider store={store}>
-      {/*<PersistGate persistor={persistor}>*/}
+      <PersistGate persistor={persistor}>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/contact-us" element={<ContactUs />} />
@@ -41,7 +41,7 @@ root.render(
           <Route path="/shop/:shopName/cart" element={<Cart />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      {/*</PersistGate>*/}
+      </PersistGate>
     </Provider>
   </BrowserRouter>
 );
