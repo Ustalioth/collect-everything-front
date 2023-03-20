@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import serviceApi from 'api/serviceApi';
+import { login } from './authSlice';
 
 const userSlice = createSlice({
   name: 'user',
@@ -17,7 +18,10 @@ export const {
 
 export const registerCustomer = (customer) => (dispatch) => {
   return serviceApi.registerCustomer({...customer, role: "USER"}).then(
-    ({status, data}) => dispatch(setUser(data)),
+    ({status, data}) => {
+      dispatch(setUser(data));
+      dispatch(login(customer.email, customer.password));
+    },
     error => dispatch(setUser(null))
   );
 }
@@ -25,7 +29,7 @@ export const registerCustomer = (customer) => (dispatch) => {
 export const updateCustomer = (customer) => (dispatch) => {
   return serviceApi.updateCustomer({...customer, role: "USER"}).then(
     ({status, data}) => dispatch(setUser(data)),
-    error => dispatch(setUser(null))
+    error => console.log(error) /*dispatch(setUser(null))*/
   );
 }
 

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from 'react-redux'
 import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import 'translation/i18n';
 import "./index.css";
 import App from "./App";
 import { HomePage as ShopHomePage } from "pages/Shop/Home/HomePage";
@@ -12,12 +13,15 @@ import reportWebVitals from "./reportWebVitals";
 import { ContactUs } from "pages/Site/ContactUs/ContactUs";
 import { AboutUs } from "pages/Site/AboutUs/AboutUs";
 import { Checkout } from "pages/Site/Checkout/Checkout";
-import {ShopCategories} from "pages/Shop/Category/ShopCategories";
-import {ProductDetails} from "pages/Shop/Catalog/Product/ProductDetails";
-import {ShopLogin} from "pages/Shop/Account/ShopLogin";
+import { ShopCategories } from "pages/Shop/Category/ShopCategories";
+import { ProductDetails } from "pages/Shop/Catalog/Product/ProductDetails";
+import { ShopLogin } from "pages/Shop/Account/ShopLogin";
 import { Catalog } from "pages/Shop/Catalog/Catalog";
 import { Cart } from "pages/Shop/Cart/Cart";
-import 'translation/i18n';
+import { MyAccount } from "pages/Shop/Account/MyAccount";
+import { MyInformations } from "pages/Shop/Account/MyInformations";
+import { MyOrders } from "pages/Shop/Account/MyOrders";
+
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -39,6 +43,9 @@ root.render(
           <Route path="/shop/:shopName/login" element={<ShopLogin />} />
           <Route path="/shop/:shopName/catalog" element={<Catalog />} />
           <Route path="/shop/:shopName/cart" element={<Cart />} />
+          <Route path="/shop/:shopName/account" element={<MyAccount />} />
+          <Route path="/shop/:shopName/account/informations" element={<MyInformations />} />
+          <Route path="/shop/:shopName/account/orders" element={<MyOrders />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </PersistGate>

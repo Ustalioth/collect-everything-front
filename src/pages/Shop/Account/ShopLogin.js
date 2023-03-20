@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navbar } from "pages/Shop/Navbar/Navbar";
 import { login } from "redux/authSlice";
+import { Register } from "./Register";
 
 export const ShopLogin = () => {
 
@@ -28,9 +29,16 @@ export const ShopLogin = () => {
         <>
             <Navbar />
             <h1>Login</h1>
-            <input type={"text"} name={"email"} placeholder="Email" value={credentials.email} onChange={handleChange} />
-            <input type={"password"} name={"password"} placeholder="Password" value={credentials.password} onChange={handleChange} />
-            <input type={"submit"} name={"Connexion"} onClick={handleSubmit} />
+            <div className="d-flex">
+                <div className="container">
+                    <input type={"text"} name={"email"} placeholder="Email" value={credentials.email} onChange={handleChange} />
+                    <input type={"password"} name={"password"} placeholder="Password" value={credentials.password} onChange={handleChange} />
+                    <input type={"submit"} value={"Connexion"} onClick={handleSubmit} />
+                </div>
+                <div className="container">
+                    <Register />
+                </div>
+            </div>
         </>
     )
 }
