@@ -10,15 +10,18 @@ export const Table = (props) => {
                 <thead>
                     <tr>
                     {
-                        columns?.map(header => <th scope="col">{ header }</th>)
+                        columns?.map(headerTitle => <th scope="col">{ headerTitle }</th>)
                     }
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        
+                        rows?.map(row => 
+                        <tr>
+                            {row?.map(cell => <td>{ cell }</td>)}
+                        </tr>
+                        )
                     }
-                    
                 </tbody>
             </table>
         </>
