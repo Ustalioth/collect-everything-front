@@ -29,7 +29,7 @@ export const HomePage = () => {
             <Navbar />
             <h1>{ t('shop.homepage-welcome') } {shopName}</h1>
             <div className="d-flex">
-                {(shop?.products && (shop.products?.length > 0) && shop.products?.map(product =>
+                {(shop?.products && (shop?.products?.length > 0) && shop?.products?.map(product =>
                     <ProductCard key={product?.productId} product={product}/>
                 )) || (
                     <p>Aucun produit</p>
